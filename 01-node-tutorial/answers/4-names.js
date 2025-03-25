@@ -1,8 +1,8 @@
 //local
-const secret = "SUPER SECRET";
+const SECRET = "SUPER SECRET";
 
 //shared
-const john = "john";
-const peter = "peter";
+const JOHN = "john";
+const PETER = "peter";
 
-module.exports = { john, peter };
+module.exports = { JOHN, PETER };
