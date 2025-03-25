@@ -1,20 +1,20 @@
 const { readFileSync, writeFileSync } = require("fs");
-const line1 = "This is line 1";
-const line2 = "This is line 2";
-const line3 = "This is line 3";
+const LINE1 = "This is line 1";
+const LINE2 = "This is line 2";
+const LINE3 = "This is line 3";
 
-const path = "./temporary/fileA.txt";
+const PATH = "./temporary/fileA.txt";
 // Write to the file
-writeFileSync(path, `${line1}\n`, {
+writeFileSync(PATH, `${LINE1}\n`, {
   flag: "a",
 });
-writeFileSync(path, `${line2}\n`, {
+writeFileSync(PATH, `${LINE2}\n`, {
   flag: "a",
 });
-writeFileSync(path, `${line3}`, {
+writeFileSync(PATH, `${LINE3}`, {
   flag: "a",
 });
 
 // Read the file synchronously
-const result = readFileSync(path, "utf8");
-console.log(result);
+const RESULT = readFileSync(PATH, "utf8");
+console.log(RESULT);

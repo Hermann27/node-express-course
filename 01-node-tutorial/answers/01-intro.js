@@ -1,6 +1,6 @@
-const amount = 12;
+const AMOUNT = 12;
 
-if (amount < 10) {
+if (AMOUNT < 10) {
   console.log("small number");
 } else {
   console.log("large number");
