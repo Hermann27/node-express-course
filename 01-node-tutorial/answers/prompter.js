@@ -21,17 +21,22 @@ const getBody = (req, callback) => {
 };
 
 // here, you could declare one or more variables to store what comes back from the form.
-let item = "Enter something below.";
+//let item = "Enter something below.";
+// Generate a random number between 1 and 100
+let randomNumber = Math.floor(Math.random() * 100) + 1;
+let feedbackMessage = "Guess a number between 1 and 100:";
 
 // here, you can change the form below to modify the input fields and what is displayed.
 // This is just ordinary html with string interpolation.
 const form = () => {
   return `
   <body>
-  <p>${item}</p>
+  <h1>Number Guessing Game</h1>
+  <p>${feedbackMessage}</p>
   <form method="POST">
-  <input name="item"></input>
-  <button type="submit">Submit</button>
+    <label for="guess">Your Guess:</label>
+    <input type="number" name="guess" min="1" max="100" required></input>
+    <button type="submit">Submit Guess</button>
   </form>
   </body>
   `;
@@ -44,10 +49,16 @@ const server = http.createServer((req, res) => {
     getBody(req, (body) => {
       console.log("The body of the post is ", body);
       // here, you can add your own logic
-      if (body["item"]) {
-        item = body["item"];
+      let userGuess = parseInt(body["guess"]); // Convert the guess to an integer
+
+      if (userGuess < randomNumber) {
+        feedbackMessage = `Your guess of ${userGuess} is too low! Try again.`;
+      } else if (userGuess > randomNumber) {
+        feedbackMessage = `Your guess of ${userGuess} is too high! Try again.`;
       } else {
-        item = "Nothing was entered.";
+        feedbackMessage = `Congratulations! You guessed the correct number: ${randomNumber}.`;
+        // Reset the random number for the next round
+        randomNumber = Math.floor(Math.random() * 100) + 1;
       }
       // Your code changes would end here
       res.writeHead(303, {
