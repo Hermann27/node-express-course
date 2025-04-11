@@ -1,8 +1,23 @@
 const express = require("express");
 const app = express();
 
+const peopleRouter = require("./routes/people.js");
+const authRouter = require("./routes/auth.js");
+
+app.use(express.static("./methods-public")); //static assets
+app.use(express.urlencoded({ extended: false })); //parse form data
+app.use(express.json()); //parse json data
+
+app.use("/api/v1/people", peopleRouter); //middleware for people routes
+app.use("/login", authRouter); //middleware for auth routes
+
 const { products } = require("./data.js");
+const morgan = require("morgan");
+const logger = require("./logger.js"); //middleware
+const authorize = require("./authorize.js"); //middleware
+
 app.use(express.static("./public"));
+app.use(morgan("tiny")); //middleware
 
 app.get("/api/v1/test", (req, res) => {
   res.json({ message: "It worked!" });
