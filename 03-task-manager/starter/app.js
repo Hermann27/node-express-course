@@ -5,23 +5,17 @@ const connectDB = require("./db/connect");
 
 require("dotenv").config(); // load environment variables from .env file
 
+const notFound = require("./middleware/not-found"); // custom middleware for handling 404 errors
+const errorHandlerMiddleware = require("./middleware/error-handler"); // custom middleware for handling errors
 // middleware
+app.use(express.static("./public")); // serve static files from the public directory
 app.use(express.json()); // parse JSON data from incoming requests
 
-//routes
-app.get("/hello", (req, res) => {
-  res.send("Task Manager");
-});
-
 app.use("/api/v1/tasks", tasksRouter);
+app.use(notFound); // use the notFound middleware for handling 404 errors
+app.use(errorHandlerMiddleware); // use the errorHandlerMiddleware for handling errors
 
-//app.get('/api/v1/tasks') //get all tasks
-//app.post('/api/v1/tasks') //create a new task
-//app.get('/api/v1/tasks/:id') //get single task
-//app.patch('/api/v1/tasks/:id') //update task
-//app.delete('/api/v1/tasks/:id') //delete task
-
-const port = 3000;
+const port = process.env.PORT || 3000;
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URI);
